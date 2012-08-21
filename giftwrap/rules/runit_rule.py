@@ -49,7 +49,7 @@ class RunItRule(Rule):
     def apply(self, 
               package, 
               context):
-        from utilities import stringify_args, write_lines_to_file
+        from giftwrap.utilities import stringify_args, write_lines_to_file
         
         package.add_dependency('runit')
         
