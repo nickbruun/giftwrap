@@ -18,8 +18,5 @@ class PostInstallScriptRule(Rule):
         self._script = script if isinstance(script, list) else script.split('\n')
     
     
-    def apply(self, 
-              package, 
-              context):
-        
+    def apply(self, package, context):
         context.postinst_commands += self._script

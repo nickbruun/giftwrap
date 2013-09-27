@@ -17,7 +17,7 @@ class PackagingContext(object):
                                        'data')
         self._control_path = os.path.join(self._root_path,
                                           'control')
-        
+
         os.mkdir(self._data_path)
         os.mkdir(self._control_path)
     

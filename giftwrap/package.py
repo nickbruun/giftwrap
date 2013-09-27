@@ -119,7 +119,7 @@ class Package(object):
         to check the package after the package has been generated. If Lintian 
         is not found, this parameter will be ignored.
         """
-        
+
         context = PackagingContext()
         context.build(self)
         context.pack(self, 
