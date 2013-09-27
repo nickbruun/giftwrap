@@ -1,4 +1,5 @@
-from base import *
+from .base import Rule
+
 
 class PostInstallScriptRule(Rule):
     """Post installation script rule.
@@ -11,12 +12,13 @@ class PostInstallScriptRule(Rule):
                  script):
         """Initialize a post installation script rule.
         
-        :param script: String or, preferably, list of strings containing the 
-        lines of the script.
+        :param script:
+            String or, preferably, list of strings containing the lines of the
+            script.
         """
-        
-        self._script = script if isinstance(script, list) else script.split('\n')
-    
-    
+
+        self._script = script if isinstance(script, list) else \
+            script.split('\n')
+
     def apply(self, package, context):
         context.postinst_commands += self._script

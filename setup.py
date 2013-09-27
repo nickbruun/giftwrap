@@ -7,15 +7,6 @@ giftwrap is a simple Python library providing a DSL for building Debian
 packages for deployment.
 """
 
-# Hack to prevent stupid "TypeError: 'NoneType' object is not callable" error
-# in multiprocessing/util.py _exit_function when running `python
-# setup.py test` (see
-# http://www.eby-sarna.com/pipermail/peak/2010-May/003357.html)
-try:
-    import multiprocessing
-except ImportError:
-    pass
-
 from setuptools import setup, find_packages
 
 tests_require = [

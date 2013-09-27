@@ -1,4 +1,5 @@
-from base import *
+from .base import Rule
+
 
 class UserRule(Rule):
     """User rule.
@@ -10,30 +11,26 @@ class UserRule(Rule):
     :ivar system_user: default ``True``, System user.
     :ivar no_home_directory: default ``True``, No home directory.
     """
-    
+
     def __init__(self, 
                  user, 
                  group = None, 
                  system_user = True, 
                  no_home_directory = True):
         """Initialize a user rule.
-        
+
         :param user: default `root`, Username.
         :param group: default ``None``, Group name.
         :param system_user: default ``True``, System user.
         :param no_home_directory: default ``True``, No home directory.
         """
-        
+
         self.user = user
         self.group = group
         self.system_user = system_user
         self.no_home_directory = no_home_directory
-    
-    
-    def apply(self, 
-              package, 
-              context):
-        
+
+    def apply(self, package, context):
         package.add_dependency('adduser')
 
         context.postinst_commands += \

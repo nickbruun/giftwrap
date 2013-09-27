@@ -1,5 +1,7 @@
-from base import *
-
+import os
+import shutil
+import stat
+from .base import Rule
 
 class FileRule(Rule):
     """File rule.
@@ -30,10 +32,7 @@ class FileRule(Rule):
         self.group = group
         self.permissions = permissions
 
-
     def apply(self, package, context):
-        import glob, os, fnmatch, shutil, stat
-
         # Create the destination directory if it does not exist.
         destination_dir = context.data_dir_path(
             os.path.dirname(self.destination_path)
