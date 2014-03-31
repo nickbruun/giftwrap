@@ -23,5 +23,5 @@ class DirectoryRule(Rule):
 
     def apply(self, package, context):
         context.data_dir_path(self.path,
-                              user = self._user, 
-                              group = self._group)
+                              user = self.user,
+                              group = self.group)
