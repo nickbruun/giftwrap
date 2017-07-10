@@ -1,4 +1,5 @@
-import re, datetime
+import re
+import datetime
 from .priorities import PRIORITY_OPTIONAL
 from .sections import SECTION_WEB
 from .packaging_context import PackagingContext
@@ -38,18 +39,19 @@ class Package(object):
     :ivar rules: Package rules.
     """
 
-    def __init__(self, 
+    def __init__(self,
                  name,
-                 maintainer_name, 
-                 maintainer_email, 
-                 homepage, 
-                 description, 
-                 long_description, 
-                 version, 
-                 depends = [], 
-                 architectures = None, 
-                 section = SECTION_WEB, 
-                 priority = PRIORITY_OPTIONAL):
+                 maintainer_name,
+                 maintainer_email,
+                 homepage,
+                 description,
+                 long_description,
+                 version,
+                 depends=[],
+                 conflicts=[],
+                 architectures=None,
+                 section=SECTION_WEB,
+                 priority=PRIORITY_OPTIONAL):
         """Initialize a new package representation.
 
         :ivar name:
@@ -82,7 +84,11 @@ class Package(object):
         # Check the name.
         self.name = name.strip().lower()
         if not PACKAGE_NAME_EXPRESSION.match(self.name):
-            raise ValueError('invalid package name -- package names must consist of only letters, digits, plus and minus signs, and periods. They must be at least two characters long and must start with an alphanumeric character.')
+            raise ValueError('invalid package name -- package names must '
+                             'consist of only letters, digits, plus and minus '
+                             'signs, and periods. They must be at least two '
+                             'characters long and must start with an '
+                             'alphanumeric character.')
 
         # Check the maintainer.
         if not isinstance(maintainer_name, str):
@@ -103,26 +109,27 @@ class Package(object):
         self.long_description = long_description
         self.version = version
         self.depends = depends
+        self.conflicts = conflicts
         self.architectures = architectures
         self.section = section
         self.priority = priority
 
         # Reset other controlling variables.
         self.copyright = 'Copyright %d %s <%s>' % (
-            datetime.datetime.utcnow().year, 
-            self.maintainer_name, 
+            datetime.datetime.utcnow().year,
+            self.maintainer_name,
             self.maintainer_email
         )
-        
+
         # Initialize an empty rule set.
         self.rules = []
 
-    def pack(self, destination_path, run_lintian = False):
+    def pack(self, destination_path, run_lintian=False):
         """Pack the representation to a Debian package.
 
         :param destination_path: Destination of the created package.
-        :param run_lintian: default ``False``, whether or not to run Lintian 
-        to check the package after the package has been generated. If Lintian 
+        :param run_lintian: default ``False``, whether or not to run Lintian
+        to check the package after the package has been generated. If Lintian
         is not found, this parameter will be ignored.
         """
 
@@ -136,8 +143,16 @@ class Package(object):
         :param dependency: Dependency name.
         """
 
-        if not dependency in self.depends:
+        if dependency not in self.depends:
             self.depends.append(dependency)
+
+    def add_conflict(self, conflict):
+        """Add a conflict.
+
+        :param conflict: Conflict name.
+        """
+        if conflict not in self.conflicts:
+            self.conflicts.append(conflict)
 
     def add_rule(self, rule):
         """Add a rule to the package.

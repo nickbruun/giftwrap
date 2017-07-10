@@ -14,11 +14,11 @@ class RunItRule(Rule):
     :ivar cwd: default ``None``, Working directory for the application.
     """
 
-    def __init__(self, name, args, user = 'root', group = None, cwd = None):
+    def __init__(self, name, args, user='root', group=None, cwd=None):
         """Initialize a runit rule.
 
         :param name:
-            Identifier name. Used for both the service and the logging 
+            Identifier name. Used for both the service and the logging
             directory.
         :param args:
             Application execution arguments. If a :class:`str` instance is
@@ -49,9 +49,9 @@ class RunItRule(Rule):
 
         # Create the log directory.
         log_path = '/var/log/%s' % (self._name)
-        context.make_data_dir(log_path, 
-                              user = self._user, 
-                              group = self._group)
+        context.make_data_dir(log_path,
+                              user=self._user,
+                              group=self._group)
 
         # Build the run script.
         run_lines = ['#!/bin/sh']
@@ -65,7 +65,7 @@ class RunItRule(Rule):
         run_lines += ['exec 2>&1']
 
         if self._user != None:
-            run_lines += ['exec chpst -u%s %s' % (self._user, 
+            run_lines += ['exec chpst -u%s %s' % (self._user,
                                                   stringify_args(self._args))]
         else:
             run_lines += ['exec chpst %s' % (stringify_args(self._args))]
@@ -74,7 +74,7 @@ class RunItRule(Rule):
         log_run_lines = ['#!/bin/sh']
 
         if self._user != None:
-            log_run_lines += ['exec chpst -u%s svlogd -tt %s' % (self._user, 
+            log_run_lines += ['exec chpst -u%s svlogd -tt %s' % (self._user,
                                                                  log_path)]
         else:
             log_run_lines += ['exec svlogd -tt %s' % (log_path)]
@@ -82,9 +82,9 @@ class RunItRule(Rule):
         # Write the scripts to their location.
         write_lines_to_file(run_lines,
                             context.data_path('/etc/service/%s/run' %
-                                              (self._name)), 
-                            permissions = 0755)
+                                              (self._name)),
+                            permissions=0755)
         write_lines_to_file(log_run_lines,
                             context.data_path('/etc/service/%s/log/run' %
-                                              (self._name)), 
-                            permissions = 0755)
+                                              (self._name)),
+                            permissions=0755)

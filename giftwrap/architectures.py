@@ -1,8 +1,8 @@
 ARCHITECTURE_ANY = 'any'
 """Any architecture.
 
-Specifying only any indicates that the source package isn't dependent on any 
-particular architecture and should compile fine on any one. The produced binary 
+Specifying only any indicates that the source package isn't dependent on any
+particular architecture and should compile fine on any one. The produced binary
 package(s) will be specific to whatever the current build architecture is.
 """
 
@@ -10,7 +10,7 @@ package(s) will be specific to whatever the current build architecture is.
 ARCHITECTURE_ALL = 'all'
 """All architecures.
 
-Specifying only all indicates that the source package will only build 
+Specifying only all indicates that the source package will only build
 architecture-independent packages.
 """
 
