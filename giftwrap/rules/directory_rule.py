@@ -9,7 +9,7 @@ class DirectoryRule(Rule):
     :ivar group: default ``None``, Group name to execute an application under.
     """
 
-    def __init__(self, path, user = None, group = None):
+    def __init__(self, path, user=None, group=None):
         """Initialize a directory rule.
 
         :param path: Directory path.
@@ -23,5 +23,5 @@ class DirectoryRule(Rule):
 
     def apply(self, package, context):
         context.data_dir_path(self.path,
-                              user = self.user,
-                              group = self.group)
+                              user=self.user,
+                              group=self.group)

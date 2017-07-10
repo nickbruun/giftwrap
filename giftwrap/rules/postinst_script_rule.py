@@ -3,15 +3,15 @@ from .base import Rule
 
 class PostInstallScriptRule(Rule):
     """Post installation script rule.
-    
-    Allows the execution of one or more shell script lines after installation 
+
+    Allows the execution of one or more shell script lines after installation
     has succeeded.
     """
-    
-    def __init__(self, 
+
+    def __init__(self,
                  script):
         """Initialize a post installation script rule.
-        
+
         :param script:
             String or, preferably, list of strings containing the lines of the
             script.

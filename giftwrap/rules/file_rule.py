@@ -3,6 +3,7 @@ import shutil
 import stat
 from .base import Rule
 
+
 class FileRule(Rule):
     """File rule.
 
@@ -12,12 +13,12 @@ class FileRule(Rule):
     :ivar group: default ``None``, Group name to execute an application under.
     """
 
-    def __init__(self, 
+    def __init__(self,
                  source_path,
                  destination_path,
-                 user = None,
-                 group = None,
-                 permissions = None):
+                 user=None,
+                 group=None,
+                 permissions=None):
         """Initialize a file rule.
 
         :param source_path: Source path.

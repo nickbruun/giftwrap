@@ -2,7 +2,8 @@
 Package priorities.
 ===================
 
-Prorities as defined in http://www.debian.org/doc/debian-policy/ch-archive.html#s-priorities
+Prorities as defined in
+http://www.debian.org/doc/debian-policy/ch-archive.html#s-priorities
 """
 
 PRIORITY_REQUIRED = 'required'
@@ -13,7 +14,7 @@ PRIORITY_REQUIRED = 'required'
 PRIORITY_IMPORTANT = 'important'
 """Important package.
 
-Like those containing programs which one would expect to find on any Unix-like 
+Like those containing programs which one would expect to find on any Unix-like
 system.
 """
 
