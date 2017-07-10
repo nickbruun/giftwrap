@@ -213,6 +213,10 @@ class PackagingContext(object):
         if ((not package.depends is None) and 
             (len(package.depends) > 0)):
             rules['Depends'] = ', '.join(package.depends)
+
+        if ((not package.conflicts is None) and 
+            (len(package.conflicts) > 0)):
+            rules['Conflicts'] = ', '.join(package.conflicts)
         
         # Finally, write the file.
         write_lines_to_file(['%s: %s' % (k, rules[k]) for k in rules], 

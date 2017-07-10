@@ -47,6 +47,7 @@ class Package(object):
                  long_description, 
                  version, 
                  depends = [], 
+                 conflicts = [], 
                  architectures = None, 
                  section = SECTION_WEB, 
                  priority = PRIORITY_OPTIONAL):
@@ -103,6 +104,7 @@ class Package(object):
         self.long_description = long_description
         self.version = version
         self.depends = depends
+        self.conflicts = conflicts
         self.architectures = architectures
         self.section = section
         self.priority = priority
@@ -138,6 +140,15 @@ class Package(object):
 
         if not dependency in self.depends:
             self.depends.append(dependency)
+
+    def add_conflict(self, conflict):
+        """Add a conflict.
+
+        :param conflict: Conflict name.
+        """
+        if not conflict in self.conflicts:
+            self.conflicts.append(conflict)
+        
 
     def add_rule(self, rule):
         """Add a rule to the package.
