@@ -34,7 +34,7 @@ class PackagingContext(object):
 
         return os.path.join(self._control_path, filename)
 
-    def _mkdirp(self, path, permissions=0755):
+    def _mkdirp(self, path, permissions=0o755):
         """Recursively make directories and set permissions.
 
         :param path: Absolute file system path.
@@ -55,7 +55,7 @@ class PackagingContext(object):
             os.chmod(abs_subdir_path,
                      permissions)
 
-    def data_path(self, path, permissions=0755):
+    def data_path(self, path, permissions=0o755):
         """Get the path for a data file or directory.
 
         Ensure that all directories have been created for the creation of a
@@ -76,7 +76,7 @@ class PackagingContext(object):
 
     def data_dir_path(self,
                       path,
-                      permissions=0755,
+                      permissions=0o755,
                       make_if_missing=True):
         """Get the path for a data directory.
 
@@ -148,7 +148,8 @@ class PackagingContext(object):
                   '    ;;',
                   '',
                   '    *)',
-                  '        echo "postinst called with unknown argument `$1`" >&2',
+                  '        echo "postinst called with unknown argument '
+                  '`$1`" >&2',
                   '        exit 1',
                   '    ;;',
                   'esac',
@@ -157,7 +158,7 @@ class PackagingContext(object):
 
         write_lines_to_file(lines,
                             self.control_path('postinst'),
-                            permissions=0755)
+                            permissions=0o755)
 
     def _write_control(self,
                        package,

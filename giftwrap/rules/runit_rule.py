@@ -56,15 +56,15 @@ class RunItRule(Rule):
         # Build the run script.
         run_lines = ['#!/bin/sh']
 
-        if self._user != None:
+        if self._user is not None:
             run_lines += ['umask 002']
 
-        if self._cwd != None:
+        if self._cwd is not None:
             run_lines += ['cd %s' % (self._cwd)]
 
         run_lines += ['exec 2>&1']
 
-        if self._user != None:
+        if self._user is not None:
             run_lines += ['exec chpst -u%s %s' % (self._user,
                                                   stringify_args(self._args))]
         else:
@@ -73,7 +73,7 @@ class RunItRule(Rule):
         # Build the log run script.
         log_run_lines = ['#!/bin/sh']
 
-        if self._user != None:
+        if self._user is not None:
             log_run_lines += ['exec chpst -u%s svlogd -tt %s' % (self._user,
                                                                  log_path)]
         else:
@@ -83,8 +83,8 @@ class RunItRule(Rule):
         write_lines_to_file(run_lines,
                             context.data_path('/etc/service/%s/run' %
                                               (self._name)),
-                            permissions=0755)
+                            permissions=0o755)
         write_lines_to_file(log_run_lines,
                             context.data_path('/etc/service/%s/log/run' %
                                               (self._name)),
-                            permissions=0755)
+                            permissions=0o755)

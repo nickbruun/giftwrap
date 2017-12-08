@@ -40,15 +40,12 @@ class GlobRule(Rule):
         destination_dir = context.data_dir_path(self.destination_dir)
 
         def synchronize_path(rel_dir):
-            abs_source_dir = os.path.join(self.source_dir,
-                                          rel_dir)
-            abs_destination_dir = os.path.join(destination_dir,
-                                               rel_dir)
+            abs_source_dir = os.path.join(self.source_dir, rel_dir)
+            abs_destination_dir = os.path.join(destination_dir, rel_dir)
 
             if not os.path.exists(abs_destination_dir):
                 os.mkdir(abs_destination_dir)
-                os.chmod(abs_destination_dir,
-                         0755)
+                os.chmod(abs_destination_dir, 0o755)
 
             for rel_path in os.listdir(abs_source_dir):
                 do_skip = False
@@ -72,9 +69,9 @@ class GlobRule(Rule):
                     shutil.copyfile(abs_source_path,
                                     abs_destination_path)
                     os.chmod(abs_destination_path,
-                             0755 if (
+                             0o755 if (
                                 stat.S_IXUSR &
                                 os.stat(abs_source_path)[stat.ST_MODE])
-                             else 0644)
+                             else 0o644)
 
         synchronize_path('')

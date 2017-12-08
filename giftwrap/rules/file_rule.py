@@ -46,7 +46,11 @@ class FileRule(Rule):
         # Copy the file.
         shutil.copyfile(self.source_path, destination_path)
 
-        os.chmod(destination_path,
-                 self.permissions if self.permissions is not None else
-                 0755 if stat.S_IXUSR & os.stat(self.source_path)[stat.ST_MODE]
-                 else 0644)
+        os.chmod(
+            destination_path,
+            self.permissions
+            if self.permissions is not None else
+            0o755
+            if stat.S_IXUSR & os.stat(self.source_path)[stat.ST_MODE]
+            else 0o644
+        )

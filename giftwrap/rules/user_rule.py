@@ -43,7 +43,9 @@ class UserRule(Rule):
 
         if self.group is not None:
             context.postinst_commands += \
-                ['    addgroup %s%s' % ('--system ' if self.system_user else '',
+                ['    addgroup %s%s' % ('--system '
+                                        if self.system_user else
+                                        '',
                                         self.group),
                  '    adduser %s %s' % (self.user,
                                         self.group)]

@@ -1,3 +1,10 @@
+import os
+import sys
+import subprocess
+import glob
+import errno
+
+
 def string_ending_in_period(input):
     """Make sure a string ends with a period.
 
@@ -9,13 +16,10 @@ def string_ending_in_period(input):
     if len(input) == 0:
         return input
 
-    return '%s%s' % (input,
-                     '.' if input[-1] != '.' else '')
+    return '%s%s' % (input, '.' if input[-1] != '.' else '')
 
 
-def write_to_file(content,
-                  path,
-                  permissions=0644):
+def write_to_file(content, path, permissions=0o644):
     """Write the contents of a string to a given path.
 
     :param content: File content.
@@ -23,19 +27,16 @@ def write_to_file(content,
     :param permissions: File permissions.
     """
 
-    import os
-
     with open(path, 'w') as output_file:
         output_file.write(content)
         output_file.close()
 
-    os.chmod(path,
-             permissions)
+    os.chmod(path, permissions)
 
 
 def write_lines_to_file(lines,
                         path,
-                        permissions=0644,
+                        permissions=0o644,
                         ending_newline=True):
     """Write the contents of a string to a given path.
 
@@ -46,31 +47,26 @@ def write_lines_to_file(lines,
     :param permissions: File permissions.
     """
 
-    import os
-
     with open(path, 'w') as output_file:
         output_file.write('%s%s' % ('\n' . join(lines),
                                     '\n' if ending_newline else ''))
         output_file.close()
 
-    os.chmod(path,
-             permissions)
+    os.chmod(path, permissions)
 
 
-def run(args,
-        cwd=None,
-        vital=True):
+def run(args, cwd=None, vital=True):
     """Run a command.
 
     :param args: Arguments of the command.
     :param cwd: Current working directory for executing the command.
-    :param fatal: Whether or not successful execution is vital for the command.
-    If execution fails for a vital command, a :class:`CalledProcessError`
-    exception will be raised.
+    :param fatal:
+        Whether or not successful execution is vital for the command.
+        If execution fails for a vital command, a :class:`CalledProcessError`.
+        exception will be raised.
     :returns: the output from the command on success, otherwise ``None``.
     """
 
-    import subprocess
     proc = subprocess.Popen(args,
                             cwd=cwd,
                             stdout=subprocess.PIPE,
@@ -79,8 +75,6 @@ def run(args,
 
     if ((vital) and
             (proc.returncode != 0)):
-        import sys
-
         print >> sys.stderr, stdout, stderr
         raise subprocess.CalledProcessError(proc.returncode,
                                             args[0],
@@ -115,8 +109,6 @@ def targz(path,
     :param files: Files to add to the archive.
     """
 
-    import os
-
     abs_paths = files if isinstance(files, (list, tuple, )) else [files]
     rel_paths = [os.path.relpath(p, cwd) for p in abs_paths]
 
@@ -131,9 +123,6 @@ def glob_dir(directory,
     :param directory: Directory path.
     :param expression: Expression to match files against.
     """
-
-    import glob
-    import os
 
     return glob.glob(os.path.join(directory,
                                   expression))
@@ -166,9 +155,6 @@ def stringify_args(args):
 
 
 def mkdirp(path):
-    import os
-    import errno
-
     try:
         os.makedirs(path)
     except OSError as exc:  # Python >2.5
